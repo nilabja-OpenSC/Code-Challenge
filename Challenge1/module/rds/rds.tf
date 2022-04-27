@@ -1,6 +1,6 @@
 
 #Call VPC Module First to get the Subnet IDs
-# module "levelup-vpc" {
+# module "project-vpc" {
 #     source      = "../vpc"
 
 #     ENVIRONMENT = var.ENVIRONMENT
@@ -8,24 +8,24 @@
 # }
 
 #Define Subnet Group for RDS Service
-resource "aws_db_subnet_group" "levelup-rds-subnet-group" {
+resource "aws_db_subnet_group" "project-rds-subnet-group" {
 
-    name          = "${var.ENVIRONMENT}-levelup-db-snet"
+    name          = "${var.ENVIRONMENT}-project-db-snet"
     description   = "Allowed subnets for DB cluster instances"
     subnet_ids    = [
       "${var.vpc_private_subnet1}",
       "${var.vpc_private_subnet2}",
     ]
     tags = {
-        Name         = "${var.ENVIRONMENT}_levelup_db_subnet"
+        Name         = "${var.ENVIRONMENT}_project_db_subnet"
     }
 }
 
 #Define Security Groups for RDS Instances
-resource "aws_security_group" "levelup-rds-sg" {
+resource "aws_security_group" "project-rds-sg" {
 
-  name = "${var.ENVIRONMENT}-levelup-rds-sg"
-  description = "Created by LevelUp"
+  name = "${var.ENVIRONMENT}-project-rds-sg"
+  description = "Created by project"
   vpc_id      = var.vpc_id
 
   ingress {
@@ -44,26 +44,26 @@ resource "aws_security_group" "levelup-rds-sg" {
   }
 
     tags = {
-    Name = "${var.ENVIRONMENT}-levelup-rds-sg"
+    Name = "${var.ENVIRONMENT}-project-rds-sg"
    }
 }
 
-resource "aws_db_instance" "levelup-rds" {
-  identifier = "${var.ENVIRONMENT}-levelup-rds"
-  allocated_storage = var.LEVELUP_RDS_ALLOCATED_STORAGE
+resource "aws_db_instance" "project-rds" {
+  identifier = "${var.ENVIRONMENT}-project-rds"
+  allocated_storage = var.project_RDS_ALLOCATED_STORAGE
   storage_type = "gp2"
-  engine = var.LEVELUP_RDS_ENGINE
-  engine_version = var.LEVELUP_RDS_ENGINE_VERSION
+  engine = var.project_RDS_ENGINE
+  engine_version = var.project_RDS_ENGINE_VERSION
   instance_class = var.DB_INSTANCE_CLASS
   backup_retention_period = var.BACKUP_RETENTION_PERIOD
   publicly_accessible = var.PUBLICLY_ACCESSIBLE
-  username = var.LEVELUP_RDS_USERNAME
-  password = var.LEVELUP_RDS_PASSWORD
-  vpc_security_group_ids = [aws_security_group.levelup-rds-sg.id]
-  db_subnet_group_name = aws_db_subnet_group.levelup-rds-subnet-group.name
+  username = var.project_RDS_USERNAME
+  password = var.project_RDS_PASSWORD
+  vpc_security_group_ids = [aws_security_group.project-rds-sg.id]
+  db_subnet_group_name = aws_db_subnet_group.project-rds-subnet-group.name
   multi_az = "false"
 }
 
 output "rds_prod_endpoint" {
-  value = aws_db_instance.levelup-rds.endpoint
+  value = aws_db_instance.project-rds.endpoint
 }

@@ -11,25 +11,25 @@ variable "PUBLICLY_ACCESSIBLE" {
     default = "true"
 }
 
-variable "LEVELUP_RDS_USERNAME" {
+variable "project_RDS_USERNAME" {
     default = "testdb"
 }
 
-variable "LEVELUP_RDS_PASSWORD" {
+variable "project_RDS_PASSWORD" {
     default = "testdb12345"
 }
 
-variable "LEVELUP_RDS_ALLOCATED_STORAGE" {
+variable "project_RDS_ALLOCATED_STORAGE" {
     type = string
     default = "20"
 }
 
-variable "LEVELUP_RDS_ENGINE" {
+variable "project_RDS_ENGINE" {
     type = string
     default = "mysql"
 }
 
-variable "LEVELUP_RDS_ENGINE_VERSION" {
+variable "project_RDS_ENGINE_VERSION" {
     type = string
     default = "8.0.20"
 }

@@ -1,11 +1,11 @@
-# module "levelup-vpc" {
+# module "project-vpc" {
 #     source      = "../module/vpc"
 
 #     ENVIRONMENT = var.ENVIRONMENT
 #     AWS_REGION  = var.AWS_REGION
 # }
 
-module "levelup-rds" {
+module "project-rds" {
     source      = "../module/rds"
 
     ENVIRONMENT = var.ENVIRONMENT
@@ -15,13 +15,13 @@ module "levelup-rds" {
     vpc_id = var.vpc_id
 }
 
-resource "aws_security_group" "levelup_webservers"{
+resource "aws_security_group" "project_webservers"{
   tags = {
-    Name = "${var.ENVIRONMENT}-levelup-webservers"
+    Name = "${var.ENVIRONMENT}-project-webservers"
   }
   
-  name          = "${var.ENVIRONMENT}-levelup-webservers"
-  description   = "Created by Levelup"
+  name          = "${var.ENVIRONMENT}-project-webservers"
+  description   = "Created by project"
   vpc_id        = var.vpc_id
 
   ingress {
@@ -57,8 +57,8 @@ resource "aws_security_group" "levelup_webservers"{
 }
 
 #Resource key pair
-resource "aws_key_pair" "levelup_key" {
-  key_name      = "levelup_key"
+resource "aws_key_pair" "project_key" {
+  key_name      = "project_key"
   public_key    = file(var.public_key_path)
 }
 
@@ -67,8 +67,8 @@ resource "aws_launch_configuration" "launch_config_webserver" {
   image_id      = lookup(var.AMIS, var.AWS_REGION)
   instance_type = var.INSTANCE_TYPE
   user_data = "#!/bin/bash\napt-get update\napt-get -y install net-tools nginx\nMYIP=`ifconfig | grep -E '(inet 10)|(addr:10)' | awk '{ print $2 }' | cut -d ':' -f2`\necho 'Hello Team\nThis is my IP: '$MYIP > /var/www/html/index.html"
-  security_groups = [aws_security_group.levelup_webservers.id]
-  key_name = aws_key_pair.levelup_key.key_name
+  security_groups = [aws_security_group.project_webservers.id]
+  key_name = aws_key_pair.project_key.key_name
   
   root_block_device {
     volume_type = "gp2"
@@ -76,8 +76,8 @@ resource "aws_launch_configuration" "launch_config_webserver" {
   }
 }
 
-resource "aws_autoscaling_group" "levelup_webserver" {
-  name                      = "levelup_WebServers"
+resource "aws_autoscaling_group" "project_webserver" {
+  name                      = "project_WebServers"
   max_size                  = 2
   min_size                  = 1
   health_check_grace_period = 30
@@ -90,11 +90,11 @@ resource "aws_autoscaling_group" "levelup_webserver" {
 }
 
 #Application load balancer for app server
-resource "aws_lb" "levelup-load-balancer" {
-  name               = "${var.ENVIRONMENT}-levelup-lb"
+resource "aws_lb" "project-load-balancer" {
+  name               = "${var.ENVIRONMENT}-project-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.levelup_webservers_alb.id]
+  security_groups    = [aws_security_group.project_webservers_alb.id]
   subnets            = ["${var.vpc_public_subnet1}", "${var.vpc_public_subnet2}"]
 
 }
@@ -109,7 +109,7 @@ resource "aws_lb_target_group" "load-balancer-target-group" {
 
 # Adding HTTP listener
 resource "aws_lb_listener" "webserver_listner" {
-  load_balancer_arn = aws_lb.levelup-load-balancer.arn
+  load_balancer_arn = aws_lb.project-load-balancer.arn
   port              = "80"
   protocol          = "HTTP"
 
@@ -120,5 +120,5 @@ resource "aws_lb_listener" "webserver_listner" {
 }
 
 output "load_balancer_output" {
-  value = aws_lb.levelup-load-balancer.dns_name
+  value = aws_lb.project-load-balancer.dns_name
 }
