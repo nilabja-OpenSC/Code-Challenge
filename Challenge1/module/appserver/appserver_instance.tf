@@ -61,15 +61,23 @@ resource "aws_launch_template" "launch_template_appserver" {
   name   = "launch_template_appserver"
   image_id      = lookup(var.AMIS, var.AWS_REGION)
   instance_type = var.INSTANCE_TYPE
-  security_group_names = [aws_security_group.project_appservers.id]
+  vpc_security_group_ids = [aws_security_group.project_appservers.id]
   key_name = aws_key_pair.app_project_key.key_name
   
-    block_device_mappings {
+  block_device_mappings {
     device_name = "/dev/sda1"
 
     ebs {
       volume_type = "gp2"
       volume_size = 20
+    }
+  }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "app-lt"
     }
   }
 }

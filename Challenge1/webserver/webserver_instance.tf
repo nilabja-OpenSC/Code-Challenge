@@ -88,7 +88,7 @@ resource "aws_launch_template" "launch_template_webserver" {
     resource_type = "instance"
 
     tags = {
-      Name = "test"
+      Name = "web-lt"
     }
   }
 
