@@ -93,7 +93,7 @@ resource "aws_autoscaling_group" "project_appserver" {
 
 #Application load balancer for app server
 resource "aws_lb" "project-internal-app-load-balancer" {
-  name               = "${var.ENVIRONMENT}-project-internal-app-lb"
+  name               = "${var.ENVIRONMENT}-project-int-app-lb"
   internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.project_appservers_alb.id]
