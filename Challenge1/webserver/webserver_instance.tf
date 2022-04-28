@@ -64,7 +64,7 @@ resource "aws_launch_template" "launch_template_webserver" {
   name   = "launch_template_webserver"
   image_id      = lookup(var.AMIS, var.AWS_REGION)
   instance_type = var.INSTANCE_TYPE
-  user_data = filebase64("./install_nginx.sh")
+  user_data = filebase64("install_nginx.sh")
   security_group_names = [aws_security_group.project_webservers.id]
   key_name = aws_key_pair.project_key.key_name
   

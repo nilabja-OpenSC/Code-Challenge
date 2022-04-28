@@ -27,7 +27,7 @@ resource "aws_security_group" "project_appservers"{
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = ["${var.SSH_CIDR_WEB_SERVER}"]
+    cidr_blocks = ["${var.SSH_CIDR_APP_SERVER}"]
 
   }
 

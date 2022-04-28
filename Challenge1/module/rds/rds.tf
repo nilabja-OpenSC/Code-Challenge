@@ -1,11 +1,11 @@
 
 #Call VPC Module First to get the Subnet IDs
-# module "project-vpc" {
-#     source      = "../vpc"
+module "project-vpc" {
+    source      = "../vpc"
 
-#     ENVIRONMENT = var.ENVIRONMENT
-#     AWS_REGION  = var.AWS_REGION
-# }
+    ENVIRONMENT = var.ENVIRONMENT
+    AWS_REGION  = var.AWS_REGION
+}
 
 #Define Subnet Group for RDS Service
 resource "aws_db_subnet_group" "project-rds-subnet-group" {
