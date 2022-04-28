@@ -17,8 +17,8 @@ module "project-webserver" {
     vpc_id = module.project-vpc.my_vpc_id
     vpc_public_subnet1 = module.project-vpc.public_web_subnet1_id
     vpc_public_subnet2 = module.project-vpc.public_web_subnet2_id
-    private_db_cidr_subnet1 = module.project_vpc.private_db_cidr_subnet1
-    private_db_cidr_subnet2 = module.project_vpc.private_db_cidr_subnet2
+    private_db_cidr_subnet1 = module.project-vpc.private_db_cidr_subnet1
+    private_db_cidr_subnet2 = module.project-vpc.private_db_cidr_subnet2
 
 }
 
