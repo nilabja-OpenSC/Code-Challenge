@@ -69,6 +69,7 @@ resource "aws_key_pair" "project_key" {
 
 resource "aws_launch_template" "launch_template_webserver" {
   name   = "launch_template_webserver"
+# image_id      = data.aws_ami.latest-ubuntu.id
   image_id      = lookup(var.AMIS, var.AWS_REGION)
   instance_type = var.INSTANCE_TYPE
   user_data = base64encode("install_nginx.sh")
