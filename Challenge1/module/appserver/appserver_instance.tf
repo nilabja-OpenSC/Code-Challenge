@@ -1,9 +1,3 @@
-module "project-vpc" {
-    source      = "../vpc"
-     ENVIRONMENT = var.ENVIRONMENT
-    AWS_REGION  = var.AWS_REGION
-}
-
 module "project-rds" {
     source      = "../rds"
 
@@ -53,7 +47,7 @@ resource "aws_security_group" "project_appservers"{
 }
 
 #Resource key pair
-resource "aws_key_pair" "project_key" {
+resource "aws_key_pair" "app_project_key" {
   key_name      = "project_key"
   public_key    = file(var.public_key_path)
 }
@@ -63,7 +57,7 @@ resource "aws_launch_template" "launch_template_appserver" {
   image_id      = lookup(var.AMIS, var.AWS_REGION)
   instance_type = var.INSTANCE_TYPE
   security_group_names = [aws_security_group.project_appservers.id]
-  key_name = aws_key_pair.project_key.key_name
+  key_name = aws_key_pair.app_project_key.key_name
   
     block_device_mappings {
     device_name = "/dev/sda1"
