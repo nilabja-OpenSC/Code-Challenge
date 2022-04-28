@@ -11,10 +11,10 @@ module "project-appserver" {
     ENVIRONMENT = var.ENVIRONMENT
     AWS_REGION  = var.AWS_REGION
     vpc_id = var.vpc_id
-    vpc_app_private_subnet1 = module.project-vpc.private_APP_subnet1_id
-    vpc_app_private_subnet2 = module.project-vpc.private_APP_subnet2_id
-    vpc_db_private_subnet1 = module.project-vpc.private_DB_subnet1_id
-    vpc_db_private_subnet2 = module.project-vpc.private_DB_subnet2_id
+    vpc_app_private_subnet1 = var.vpc_app_private_subnet1
+    vpc_app_private_subnet2 = var.vpc_app_private_subnet2
+    vpc_db_private_subnet1 = var.vpc_db_private_subnet1
+    vpc_db_private_subnet2 = var.vpc_db_private_subnet1
 
 }
 
