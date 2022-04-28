@@ -1,0 +1,14 @@
+
+iex(1)> users = %{ john: %{ book: %{ history: %{ Author: Sam White } } } }
+iex> users[:john][:book][:history][:Author]
+iex> get_in(users, [:john, :book, :history, :Author])
+
+
+
+
+
+
+
+
+
+
