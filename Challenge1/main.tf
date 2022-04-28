@@ -1,10 +1,4 @@
 
-module "project-vpc" {
-    source      = "./module/vpc"
-
-    ENVIRONMENT = var.ENVIRONMENT
-    AWS_REGION  = var.AWS_REGION
-}
 
 module "project-webserver" {
     source      = "./webserver"
@@ -19,13 +13,6 @@ module "project-webserver" {
 
 }
 
-module "project-appserver" {
-    source      = "./module/webserver"
-
-    ENVIRONMENT = var.ENVIRONMENT
-    AWS_REGION  = var.AWS_REGION
-
-}
 
 #Define Provider
 provider "aws" {

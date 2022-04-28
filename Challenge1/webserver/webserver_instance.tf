@@ -5,14 +5,12 @@
 #     AWS_REGION  = var.AWS_REGION
 # }
 
-module "project-rds" {
-    source      = "../module/rds"
+module "project-appserver" {
+    source      = "../module/webserver"
 
     ENVIRONMENT = var.ENVIRONMENT
     AWS_REGION  = var.AWS_REGION
-    vpc_private_subnet1 = var.vpc_private_subnet1
-    vpc_private_subnet2 = var.vpc_private_subnet2
-    vpc_id = var.vpc_id
+
 }
 
 resource "aws_security_group" "project_webservers"{
