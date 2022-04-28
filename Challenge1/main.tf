@@ -5,7 +5,7 @@ module "project-vpc" {
     AWS_REGION  = var.AWS_REGION
 }
 
-module "levelup-webserver" {
+module "project-webserver" {
     source      = "./webserver"
 
     ENVIRONMENT = var.ENVIRONMENT
@@ -14,7 +14,7 @@ module "levelup-webserver" {
     vpc_app_private_subnet2 = module.project-vpc.private_APP_subnet2_id
     vpc_db_private_subnet1 = module.project-vpc.private_DB_subnet1_id
     vpc_db_private_subnet2 = module.project-vpc.private_DB_subnet2_id
-    vpc_id = module.levelup-vpc.my_vpc_id
+    vpc_id = module.project-vpc.my_vpc_id
     vpc_public_subnet1 = module.project-vpc.public_web_subnet1_id
     vpc_public_subnet2 = module.project-vpc.public_web_subnet2_id
 

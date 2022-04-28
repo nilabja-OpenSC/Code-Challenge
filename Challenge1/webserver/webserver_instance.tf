@@ -1,4 +1,4 @@
-# module "levelup-vpc" {
+# module "project-vpc" {
 #     source      = "../module/vpc"
 
 #     ENVIRONMENT = var.ENVIRONMENT
