@@ -13,8 +13,8 @@ resource "aws_db_subnet_group" "project-rds-subnet-group" {
     name          = "${var.ENVIRONMENT}-project-db-snet"
     description   = "Allowed subnets for DB cluster instances"
     subnet_ids    = [
-      "${var.vpc_private_subnet1}",
-      "${var.vpc_private_subnet2}",
+      "${module.project-vpc.private_DB_subnet1_id}",
+      "${module.project-vpc.private_DB_subnet2_id}",
     ]
     tags = {
         Name         = "${var.ENVIRONMENT}_project_db_subnet"
@@ -32,7 +32,10 @@ resource "aws_security_group" "project-rds-sg" {
     from_port = 3306
     to_port = 3306
     protocol = "tcp"
-    cidr_blocks = ["${var.RDS_CIDR}"]
+    cidr_blocks = [
+      "${module.project-vpc.private_DB_subnet1_id}",
+      "${module.project-vpc.private_DB_subnet2_id}",
+    ]
 
   }
 

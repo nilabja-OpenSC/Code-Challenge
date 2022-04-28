@@ -1,8 +1,8 @@
-resource "aws_security_group" "project_webservers_alb" {
+resource "aws_security_group" "project_appservers_alb" {
   tags = {
-    Name = "${var.ENVIRONMENT}-project-webservers-ALB"
+    Name = "${var.ENVIRONMENT}-project-appservers-ALB"
   }
-  name = "${var.ENVIRONMENT}-project-webservers-ALB"
+  name = "${var.ENVIRONMENT}-project-appservers-ALB"
   description = "Created by project"
   vpc_id      = module.project-vpc.my_vpc_id 
 

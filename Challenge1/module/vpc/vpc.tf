@@ -15,7 +15,7 @@ resource "aws_vpc" "project_vpc" {
 
 # Public subnets
 
-#public Subnet 1
+#public WEB Subnet 1
 resource "aws_subnet" "project_vpc_public_subnet_1" {
   vpc_id     = aws_vpc.project_vpc.id
   cidr_block = var.project_VPC_PUBLIC_SUBNET1_CIDR_BLOCK
@@ -25,7 +25,8 @@ resource "aws_subnet" "project_vpc_public_subnet_1" {
     Name = "${var.ENVIRONMENT}-project-vpc-public-subnet-1"
   }
 }
-#public Subnet 2
+
+#public WEB Subnet 2
 resource "aws_subnet" "project_vpc_public_subnet_2" {
   vpc_id     = aws_vpc.project_vpc.id
   cidr_block = var.project_VPC_PUBLIC_SUBNET2_CIDR_BLOCK
@@ -36,22 +37,42 @@ resource "aws_subnet" "project_vpc_public_subnet_2" {
   }
 }
 
-# private subnet 1
-resource "aws_subnet" "project_vpc_private_subnet_1" {
+# private APP subnet 1
+resource "aws_subnet" "project_vpc_private_APP_subnet_1" {
   vpc_id     = aws_vpc.project_vpc.id
-  cidr_block = var.project_VPC_PRIVATE_SUBNET1_CIDR_BLOCK
+  cidr_block = var.project_VPC_PRIVATE_APP_SUBNET1_CIDR_BLOCK
   availability_zone = data.aws_availability_zones.available.names[0]
   tags = {
-    Name = "${var.ENVIRONMENT}-project-vpc-private-subnet-1"
+    Name = "${var.ENVIRONMENT}-project-vpc-private-APP-subnet-1"
   }
 }
-# private subnet 2
-resource "aws_subnet" "project_vpc_private_subnet_2" {
+# private APP subnet 2
+resource "aws_subnet" "project_vpc_private_APP_subnet_2" {
   vpc_id     = aws_vpc.project_vpc.id
-  cidr_block = var.project_VPC_PRIVATE_SUBNET2_CIDR_BLOCK
+  cidr_block = var.project_VPC_PRIVATE_APP_SUBNET2_CIDR_BLOCK
   availability_zone = data.aws_availability_zones.available.names[1]
   tags = {
-    Name = "${var.ENVIRONMENT}-project-vpc-private-subnet-2"
+    Name = "${var.ENVIRONMENT}-project-vpc-private-APP-subnet-2"
+  }
+}
+
+# private DB subnet 1
+resource "aws_subnet" "project_vpc_private_DB_subnet_1" {
+  vpc_id     = aws_vpc.project_vpc.id
+  cidr_block = var.project_VPC_PRIVATE_DB_SUBNET1_CIDR_BLOCK
+  availability_zone = data.aws_availability_zones.available.names[0]
+  tags = {
+    Name = "${var.ENVIRONMENT}-project-vpc-private-DB-subnet-1"
+  }
+}
+
+# private DB subnet 2
+resource "aws_subnet" "project_vpc_private_DB_subnet_2" {
+  vpc_id     = aws_vpc.project_vpc.id
+  cidr_block = var.project_VPC_PRIVATE_DB_SUBNET2_CIDR_BLOCK
+  availability_zone = data.aws_availability_zones.available.names[1]
+  tags = {
+    Name = "${var.ENVIRONMENT}-project-vpc-private-DB-subnet-2"
   }
 }
 
@@ -106,7 +127,7 @@ resource "aws_route_table" "private" {
   }
 }
 
-# Route Table association with public subnets
+# Route Table association with WEB public subnets
 resource "aws_route_table_association" "to_public_subnet1" {
   subnet_id      = aws_subnet.project_vpc_public_subnet_1.id
   route_table_id = aws_route_table.public.id
@@ -116,13 +137,23 @@ resource "aws_route_table_association" "to_public_subnet2" {
   route_table_id = aws_route_table.public.id
 }
 
-# Route table association with private subnets
-resource "aws_route_table_association" "to_private_subnet1" {
-  subnet_id      = aws_subnet.project_vpc_private_subnet_1.id
+# Route table association with APP private subnets
+resource "aws_route_table_association" "to_private_APP_subnet1" {
+  subnet_id      = aws_subnet.project_vpc_private_APP_subnet_1.id
   route_table_id = aws_route_table.private.id
 }
-resource "aws_route_table_association" "to_private_subnet2" {
-  subnet_id      = aws_subnet.project_vpc_private_subnet_2.id
+resource "aws_route_table_association" "to_private_APP_subnet2" {
+  subnet_id      = aws_subnet.project_vpc_private_APP_subnet_2.id
+  route_table_id = aws_route_table.private.id
+}
+
+# Route table association with DB private subnets
+resource "aws_route_table_association" "to_private_DB_subnet1" {
+  subnet_id      = aws_subnet.project_vpc_private_DB_subnet_1.id
+  route_table_id = aws_route_table.private.id
+}
+resource "aws_route_table_association" "to_private_DB_subnet2" {
+  subnet_id      = aws_subnet.project_vpc_private_DB_subnet_2.id
   route_table_id = aws_route_table.private.id
 }
 
@@ -136,14 +167,24 @@ output "my_vpc_id" {
   value       = aws_vpc.project_vpc.id
 }
 
-output "private_subnet1_id" {
+output "private_APP_subnet1_id" {
   description = "Subnet ID"
-  value       = aws_subnet.project_vpc_private_subnet_1.id
+  value       = aws_subnet.project_vpc_private_APP_subnet_1.id
 }
 
-output "private_subnet2_id" {
+output "private_APP_subnet2_id" {
   description = "Subnet ID"
-  value       = aws_subnet.project_vpc_private_subnet_2.id
+  value       = aws_subnet.project_vpc_private_APP_subnet_2.id
+}
+
+output "private_DB_subnet1_id" {
+  description = "Subnet ID"
+  value       = aws_subnet.project_vpc_private_DB_subnet_1.id
+}
+
+output "private_DB_subnet2_id" {
+  description = "Subnet ID"
+  value       = aws_subnet.project_vpc_private_DB_subnet_2.id
 }
 
 output "public_subnet1_id" {
@@ -153,5 +194,5 @@ output "public_subnet1_id" {
 
 output "public_subnet2_id" {
   description = "Subnet ID"
-  value       = aws_subnet.project_vpc_private_subnet_2.id
+  value       = aws_subnet.project_vpc_public_subnet_2.id
 }

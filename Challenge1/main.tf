@@ -19,12 +19,25 @@ module "project-webserver" {
 
 }
 
+module "project-appserver" {
+    source      = "./module/webserver"
+
+    ENVIRONMENT = var.ENVIRONMENT
+    AWS_REGION  = var.AWS_REGION
+
+}
+
 #Define Provider
 provider "aws" {
   region = var.AWS_REGION
 }
 
-output "load_balancer_output" {
-  description = "Load Balancer"
-  value       = module.project-webserver.load_balancer_output
+output "web-load_balancer_output" {
+  description = "WEB Load Balancer"
+  value       = module.project-webserver.web-load_balancer_output
+}
+
+output "app-load_balancer_output" {
+  description = "APP Load Balancer"
+  value       = module.project-appserver.app-load_balancer_output
 }
