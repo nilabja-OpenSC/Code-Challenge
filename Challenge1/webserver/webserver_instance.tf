@@ -1,9 +1,9 @@
-# module "project-vpc" {
-#     source      = "../module/vpc"
+module "project-vpc" {
+    source      = "../module/vpc"
 
-#     ENVIRONMENT = var.ENVIRONMENT
-#     AWS_REGION  = var.AWS_REGION
-# }
+    ENVIRONMENT = var.ENVIRONMENT
+    AWS_REGION  = var.AWS_REGION
+}
 
 module "project-appserver" {
     source      = "../module/appserver"
@@ -126,4 +126,9 @@ resource "aws_lb_listener" "webserver_listner" {
 
 output "web-load_balancer_output" {
   value = aws_lb.project-load-balancer.dns_name
+}
+
+output "app-load_balancer_output" {
+  description = "APP Load Balancer"
+  value       = module.project-appserver.app-load_balancer_output
 }

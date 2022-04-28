@@ -15,7 +15,3 @@ output "web-load_balancer_output" {
   value       = module.project-webserver.web-load_balancer_output
 }
 
-output "app-load_balancer_output" {
-  description = "APP Load Balancer"
-  value       = module.project-appserver.app-load_balancer_output
-}
