@@ -3,6 +3,9 @@ module "project-rds" {
 
     ENVIRONMENT = var.ENVIRONMENT
     AWS_REGION  = var.AWS_REGION
+    vpc_id = var.vpc_id
+    vpc_db_private_subnet1 = module.project-vpc.private_DB_subnet1_id
+    vpc_db_private_subnet2 = module.project-vpc.private_DB_subnet2_id
 }
 
 resource "aws_security_group" "project_appservers"{
@@ -12,7 +15,7 @@ resource "aws_security_group" "project_appservers"{
   
   name          = "${var.ENVIRONMENT}-project-webservers"
   description   = "Created by project"
-  vpc_id        = module.project-vpc.my_vpc_id
+  vpc_id        = var.vpc_id
 
   ingress {
     from_port = 22
@@ -81,7 +84,7 @@ resource "aws_autoscaling_group" "project_appserver" {
     id      = aws_launch_template.launch_template_appserver.id
     version = "$Latest"
   }
-  vpc_zone_identifier       = ["${module.project-vpc.private_APP_subnet1_id}", "${module.project-vpc.private_APP_subnet2_id}"]
+  vpc_zone_identifier       = ["${var.vpc_app_private_subnet1}", "${var.vpc_app_private_subnet2}"]
   target_group_arns         = [aws_lb_target_group.internal-app-load-balancer-target-group.arn]
 }
 
@@ -91,7 +94,7 @@ resource "aws_lb" "project-internal-app-load-balancer" {
   internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.project_appservers_alb.id]
-  subnets            = ["${module.project-vpc.private_APP_subnet1_id}", "${module.project-vpc.private_APP_subnet2_id}"]
+  subnets            = ["${var.vpc_app_private_subnet1}", "${var.vpc_app_private_subnet2}"]
 
 }
 
@@ -100,7 +103,7 @@ resource "aws_lb_target_group" "internal-app-load-balancer-target-group" {
   name     = "int-app-lb-target-group"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = module.project-vpc.my_vpc_id
+  vpc_id   = var.vpc_id
 }
 
 # Adding HTTP listener

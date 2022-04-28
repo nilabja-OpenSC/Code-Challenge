@@ -187,12 +187,12 @@ output "private_DB_subnet2_id" {
   value       = aws_subnet.project_vpc_private_DB_subnet_2.id
 }
 
-output "public_subnet1_id" {
+output "public_web_subnet1_id" {
   description = "Subnet ID"
   value       = aws_subnet.project_vpc_public_subnet_1.id
 }
 
-output "public_subnet2_id" {
+output "public_web_subnet2_id" {
   description = "Subnet ID"
   value       = aws_subnet.project_vpc_public_subnet_2.id
 }

@@ -4,7 +4,7 @@ resource "aws_security_group" "project_webservers_alb" {
   }
   name = "${var.ENVIRONMENT}-project-webservers-ALB"
   description = "Created by project"
-  vpc_id      = module.project-vpc.my_vpc_id 
+  vpc_id      = var.vpc_id 
 
   ingress {
     from_port = 80
