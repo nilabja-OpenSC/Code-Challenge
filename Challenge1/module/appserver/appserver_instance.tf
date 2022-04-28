@@ -15,7 +15,7 @@ resource "aws_security_group" "project_appservers"{
     Name = "${var.ENVIRONMENT}-project-appservers"
   }
   
-  name          = "${var.ENVIRONMENT}-project-webservers"
+  name          = "${var.ENVIRONMENT}-project-appservers"
   description   = "Created by project"
   vpc_id        = var.vpc_id
 
@@ -53,7 +53,7 @@ resource "aws_security_group" "project_appservers"{
 
 #Resource key pair
 resource "aws_key_pair" "app_project_key" {
-  key_name      = "project_key"
+  key_name      = "app_key"
   public_key    = file(var.public_key_path)
 }
 

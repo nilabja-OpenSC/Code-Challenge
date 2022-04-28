@@ -72,10 +72,10 @@ resource "aws_launch_template" "launch_template_webserver" {
   image_id      = lookup(var.AMIS, var.AWS_REGION)
   instance_type = var.INSTANCE_TYPE
   user_data = base64encode("install_nginx.sh")
-  security_group_names = [aws_security_group.project_webservers.id]
+  vpc_security_group_ids = [aws_security_group.project_webservers.id]
   key_name = aws_key_pair.project_key.key_name
   
-    block_device_mappings {
+  block_device_mappings {
     device_name = "/dev/sda1"
 
     ebs {
@@ -83,6 +83,15 @@ resource "aws_launch_template" "launch_template_webserver" {
       volume_size = 20
     }
   }
+
+  tag_specifications {
+    resource_type = "instance"
+
+    tags = {
+      Name = "test"
+    }
+  }
+
 }
 
 resource "aws_autoscaling_group" "project_webserver" {
