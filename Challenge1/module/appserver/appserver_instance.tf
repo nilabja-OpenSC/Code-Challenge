@@ -103,7 +103,7 @@ resource "aws_lb" "project-internal-app-load-balancer" {
 
 # Add Target Group
 resource "aws_lb_target_group" "internal-app-load-balancer-target-group" {
-  name     = "int-app-load-balancer-target-group"
+  name     = "int-app-lb-target-group"
   port     = 80
   protocol = "HTTP"
   vpc_id   = module.project-vpc.my_vpc_id
