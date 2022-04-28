@@ -1,9 +1,8 @@
-# module "project-vpc" {
-#     source      = "../vpc"
-
-#     ENVIRONMENT = var.ENVIRONMENT
-#     AWS_REGION  = var.AWS_REGION
-# }
+module "project-vpc" {
+    source      = "../vpc"
+     ENVIRONMENT = var.ENVIRONMENT
+    AWS_REGION  = var.AWS_REGION
+}
 
 module "project-rds" {
     source      = "../rds"
