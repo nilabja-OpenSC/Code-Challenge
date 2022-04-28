@@ -5,12 +5,14 @@ module "project-rds" {
     AWS_REGION  = var.AWS_REGION
     vpc_id = var.vpc_id
     vpc_db_private_subnet1 = var.vpc_db_private_subnet1
-    vpc_db_private_subnet2 = var.vpc_db_private_subnet1
+    vpc_db_private_subnet2 = var.vpc_db_private_subnet2
+    private_db_cidr_subnet1 = var.private_db_cidr_subnet1
+    private_db_cidr_subnet2 = var.private_db_cidr_subnet2
 }
 
 resource "aws_security_group" "project_appservers"{
   tags = {
-    Name = "${var.ENVIRONMENT}-project-webservers"
+    Name = "${var.ENVIRONMENT}-project-appservers"
   }
   
   name          = "${var.ENVIRONMENT}-project-webservers"

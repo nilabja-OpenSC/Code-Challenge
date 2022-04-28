@@ -14,7 +14,9 @@ module "project-appserver" {
     vpc_app_private_subnet1 = var.vpc_app_private_subnet1
     vpc_app_private_subnet2 = var.vpc_app_private_subnet2
     vpc_db_private_subnet1 = var.vpc_db_private_subnet1
-    vpc_db_private_subnet2 = var.vpc_db_private_subnet1
+    vpc_db_private_subnet2 = var.vpc_db_private_subnet2
+    private_db_cidr_subnet1 = var.private_db_cidr_subnet1
+    private_db_cidr_subnet2 = var.private_db_cidr_subnet2
 
 }
 

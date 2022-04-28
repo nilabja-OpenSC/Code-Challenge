@@ -30,7 +30,7 @@ variable "ENVIRONMENT" {
 
 variable "public_key_path" {
   description = "Public key path"
-  default = "~/.ssh/project_key.pub"
+  default = "~/.ssh/app_key.pub"
 }
 
 variable "vpc_db_private_subnet1" {
@@ -72,6 +72,18 @@ variable "vpc_public_subnet1" {
 
 variable "vpc_public_subnet2" {
   description = "AWS VPC Environment Name"
+  type        = string
+  default     = ""
+}
+
+variable "private_db_cidr_subnet1" {
+  description = "AWS VPC Db CIDR"
+  type        = string
+  default     = ""
+}
+
+variable "private_db_cidr_subnet2" {
+  description = "AWS VPC DB CIDR"
   type        = string
   default     = ""
 }

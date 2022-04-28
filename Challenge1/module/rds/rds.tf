@@ -25,8 +25,8 @@ resource "aws_security_group" "project-rds-sg" {
     to_port = 3306
     protocol = "tcp"
     cidr_blocks = [
-      "${var.vpc_db_private_subnet1}",
-      "${var.vpc_db_private_subnet2}",
+      "${var.private_db_cidr_subnet1}",
+      "${var.private_db_cidr_subnet2}",
     ]
 
   }

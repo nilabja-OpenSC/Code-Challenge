@@ -69,3 +69,15 @@ variable "vpc_id" {
   default     = ""
 }
 
+variable "private_db_cidr_subnet1" {
+  description = "AWS VPC Db CIDR"
+  type        = string
+  default     = ""
+}
+
+variable "private_db_cidr_subnet2" {
+  description = "AWS VPC DB CIDR"
+  type        = string
+  default     = ""
+}
+

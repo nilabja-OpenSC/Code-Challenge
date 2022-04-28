@@ -196,3 +196,14 @@ output "public_web_subnet2_id" {
   description = "Subnet ID"
   value       = aws_subnet.project_vpc_public_subnet_2.id
 }
+
+#DB CIDR Block
+output "private_db_cidr_subnet1" {
+  description = "Subnet1 CIDR"
+  value       = aws_subnet.project_vpc_private_DB_subnet_1.cidr_block
+}
+
+output "private_db_cidr_subnet2" {
+  description = "Subnet2 CIDR"
+  value       = aws_subnet.project_vpc_private_DB_subnet_2.cidr_block
+}
