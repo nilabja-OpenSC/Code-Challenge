@@ -9,9 +9,6 @@ module "project-rds" {
 
     ENVIRONMENT = var.ENVIRONMENT
     AWS_REGION  = var.AWS_REGION
-    vpc_private_subnet1 = var.vpc_private_subnet1
-    vpc_private_subnet2 = var.vpc_private_subnet2
-    vpc_id = var.vpc_id
 }
 
 resource "aws_security_group" "project_appservers"{
@@ -91,7 +88,7 @@ resource "aws_autoscaling_group" "project_appserver" {
     version = "$Latest"
   }
   vpc_zone_identifier       = ["${module.project-vpc.private_APP_subnet1_id}", "${module.project-vpc.private_APP_subnet2_id}"]
-  target_group_arns         = [aws_lb_target_group.load-balancer-target-group.arn]
+  target_group_arns         = [aws_lb_target_group.internal-app-load-balancer-target-group.arn]
 }
 
 #Application load balancer for app server
@@ -106,7 +103,7 @@ resource "aws_lb" "project-internal-app-load-balancer" {
 
 # Add Target Group
 resource "aws_lb_target_group" "internal-app-load-balancer-target-group" {
-  name     = "internal-app-load-balancer-target-group"
+  name     = "int-app-load-balancer-target-group"
   port     = 80
   protocol = "HTTP"
   vpc_id   = module.project-vpc.my_vpc_id
