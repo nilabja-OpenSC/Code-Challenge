@@ -31,6 +31,7 @@ variable "project_VPC_PRIVATE_APP_SUBNET2_CIDR_BLOCK" {
   description = "The CIDR block for the APP Subnet2 in VPC"
   type        = string
   default     = "10.0.2.0/24"
+}
 
 variable "project_VPC_PRIVATE_DB_SUBNET1_CIDR_BLOCK" {
   description = "The CIDR block for the DB subnet1 in VPC"
