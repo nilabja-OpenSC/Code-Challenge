@@ -6,7 +6,7 @@
 # }
 
 module "project-appserver" {
-    source      = "../module/webserver"
+    source      = "../module/appserver"
 
     ENVIRONMENT = var.ENVIRONMENT
     AWS_REGION  = var.AWS_REGION
