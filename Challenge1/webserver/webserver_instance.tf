@@ -100,7 +100,7 @@ resource "aws_autoscaling_group" "project_webserver" {
   max_size                  = 2
   min_size                  = 1
   health_check_grace_period = 30
-  health_check_type         = "EC2"
+  health_check_type         = "ELB"
   desired_capacity          = 1
   force_delete              = true
   launch_template {
